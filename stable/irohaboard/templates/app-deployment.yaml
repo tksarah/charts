@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ include "irohaboard.fullname" . }}
+spec:
+  replicas: {{ .Values.replicaCount.app }}
+  template:
+    metadata:
+      labels:
+        app: irohaboard
+        tier: frontend
+    spec:
+      containers:
+      - name: irohaboard
+        image: "{{ .Values.irohaboard.image }}:{{ .Values.irohaboard.version }}"
+        ports:
+          - name: http
+            containerPort: 80
+        env:
+          - name: MYSQL_HOST
+            value: mysql-service
+          - name: MYSQL_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: iroha-db-secrets
+                key: mysqlrootpassword

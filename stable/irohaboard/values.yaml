@@ -1,0 +1,24 @@
+replicaCount:
+  app: 1
+  db: 1
+
+irohaboard:
+  image: "tksarah/irohaboard"
+  version: "0.9.18"
+database:
+  image: "tksarah/irohadb"
+  version: "1.0"
+
+storageSize:
+  pv: "5Gi"
+  pvc: "1Gi"
+hostPath:
+  path: "/host_mnt/c/Users/sarah/.docker/Volumes/mysql-pv"
+
+ingress:
+  enabled: false
+  annotations: {}
+  path: /
+  hosts:
+    - gateway.docker.internal
+  tls: []
